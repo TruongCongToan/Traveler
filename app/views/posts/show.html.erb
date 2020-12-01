@@ -1,0 +1,58 @@
+<div class = "mainpart">
+<p id="notice"><%= notice %></p>
+
+<div class = "showpost">
+<p>
+  <% if @post.image.attached? %>
+    <%= image_tag @post.image, class: "photo" %>
+  <% end %>
+</p>
+
+<div class = "Title">
+  <%= @post.title %>
+</div>
+
+<p>
+  <strong>Author:</strong>
+  <%= @post.writer %>
+</p>
+<br>
+<div class = 'detailshow'>
+  
+  <%= @post.detail %>
+</div>
+
+<p>
+  <strong>Location:</strong>
+  <%= @post.location %>
+</p>
+
+<p>
+  <strong>Estimated price:</strong>
+  <%= @post.estimated_price %>
+</p>
+
+<h2>Comment List</h2>
+<ul>
+  <% @post.comment.each do |comment|%>
+   <li> <b><%= comment.email %></b>:
+     <i><%= comment.comment %></i></li>
+<% end %>
+</ul>
+
+<h2>Comment</h2>
+<%= form_with(model: @comment, local: true) do |form| %>
+  <div class= "field">
+    <%= form.text_area :comment %>
+    <%= form.hidden_field :post_id, :value => @post.id %>
+    <%= form.hidden_field :email, :value => current_user.email %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+
+</div>
